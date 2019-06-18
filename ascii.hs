@@ -15,6 +15,6 @@ import Data.Char
 getChar' :: Int -> Char
 getChar' = chr
 
--- с codewars
+-- codewars
 getChar'' :: Int -> Char
 getChar'' = toEnum
