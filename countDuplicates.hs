@@ -27,7 +27,6 @@ duplicateCount = length . filter ((> 1) . length) . group . sort . map toLower
 duplicateCount :: String -> Int
 duplicateCount = length . filter (>1) . map length . group . sort . map toLower
 
-
 duplicateCount :: String -> Int
 duplicateCount
   =   map toLower
