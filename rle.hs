@@ -48,3 +48,9 @@ decode' str = filter(/='[') (filter(/=']') (filter(/='\"') (filter(/=',') (show 
         lenNum = length readNumber
         readNumber = (takeWhile (isDigit) (x:xs))
 
+decode'' str = filter(/='[') (filter(/=']') (filter(/='\"') (filter(/=',') (show (dec str))))) where
+        dec [] = []
+        dec str = (replicate ( read readNumber::Int ) (str !! (lenNum) )) :(dec (drop (lenNum+1) str)) where
+            lenNum = length readNumber
+            readNumber = (takeWhile (isDigit) str)        
+
