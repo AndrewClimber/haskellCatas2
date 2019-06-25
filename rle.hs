@@ -50,7 +50,10 @@ decode' str = filter(/='[') (filter(/=']') (filter(/='\"') (filter(/=',') (show 
 
 decode'' str = filter(/='[') (filter(/=']') (filter(/='\"') (filter(/=',') (show (dec str))))) where
         dec [] = []
+        dec [x] = []
         dec str = (replicate ( read readNumber::Int ) (str !! (lenNum) )) :(dec (drop (lenNum+1) str)) where
             lenNum = length readNumber
             readNumber = (takeWhile (isDigit) str)        
+
+           
 
