@@ -9,51 +9,49 @@ module Kata.RLE (encode,decode) where
 import Data.List
 import Data.Char
 
-
-encode :: String -> String
-encode str = 
-     filter(/=',') (filter(/='[') (filter(/=']') (filter (/='\"') 
-     (show ((transpose [((filter (/='[') (filter (/=']') (filter(/=',') 
-     (show (map length (group str))))))),(map head (group str))]))))))
-
-encode' str = 
-     fi1 (fi2 (fi3 (fi4 (show ((transpose [((fi2 (fi3 (fi1 
-     (show (map length (group str))))))),(map head (group str))]))))))  where
-        fi1 = filter(/=',')
-        fi2 = filter(/='[')
-        fi3 = filter(/=']')
-        fi4 = filter (/='\"')
-
+-- моё
+encode :: String -> String              
+encode str = filter(/=')') (filter(/='(') (filter(/='[') (filter(/=']') (filter(/='\'') (filter(/=',') 
+               (show (zip (map length (group str)) (map head (group str)))))))))               
+{-
+Составные части для колбасы.
 en str = map length (group str)
 
 en1 str = map head (group str)
 
-en2 str = show (en str)
-
-en3 str = (filter (/='[') (filter (/=']') (filter(/=',') (show (map length (group str))))))
-
-en4 str = (transpose [(en3 str),(map head (group str))])
-
-en8 str = filter(/='[') (filter(/=']') (filter(/='\"') (filter(/=',') (show (en4 str)))))
-
---decode :: String -> String
-decode [] = []
-decode (x:xs) = (replicate ( read readNumber::Int ) (xs !! (lenNum-1) )) :(decode (drop (lenNum) xs)) where
-    lenNum = length readNumber
-    readNumber = (takeWhile (isDigit) (x:xs))
-
-decode' str = filter(/='[') (filter(/=']') (filter(/='\"') (filter(/=',') (show (dec str))))) where
-    dec [] = []
-    dec (x:xs) = (replicate ( read readNumber::Int ) (xs !! (lenNum-1) )) :(dec (drop (lenNum) xs)) where
-        lenNum = length readNumber
-        readNumber = (takeWhile (isDigit) (x:xs))
-
-decode'' str = filter(/='[') (filter(/=']') (filter(/='\"') (filter(/=',') (show (dec str))))) where
+eenn str = filter(/=')') (filter(/='(') (filter(/='[') (filter(/=']') (filter(/='\'') (filter(/=',') (show (zip (en str) (en1 str))))))))
+-}
+decode :: String -> String
+decode str = filter(/='[') (filter(/=']') (filter(/='\"') (filter(/=',') (show (dec str))))) where
         dec [] = []
-        dec [x] = []
         dec str = (replicate ( read readNumber::Int ) (str !! (lenNum) )) :(dec (drop (lenNum+1) str)) where
             lenNum = length readNumber
             readNumber = (takeWhile (isDigit) str)        
 
-           
 
+-- codewars            
+import Data.List (group,groupBy)
+import Data.Function (on)
+import Data.Char (isDigit)
+            
+encode :: String -> String
+encode = concatMap ( \ xs -> show (length xs) ++ [head xs] ) . group
+            
+decode :: String -> String
+decode input = go (groupBy ((==) `on` isDigit) input) where
+        go :: [String] -> String
+        go [] = ""
+        go (x:y:zs) = replicate (read x) (head y) ++ go zs            
+
+-----------------------------------------------------------------------------
+import Data.Char
+import Data.Function
+import Data.List
+
+encode :: String -> String
+encode = concatMap (\g@(x:_) -> show (length g) ++ [x]) . group
+
+decode :: String -> String
+decode = run . groupBy ((&&) `on` isDigit) where
+    run [] = []
+    run (len:[char]:xs) = replicate (read len) char ++ run xs
