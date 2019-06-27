@@ -11,25 +11,26 @@ import Data.Char
 
 -- моё
 encode :: String -> String              
-encode str = filter(/=')') (filter(/='(') (filter(/='[') (filter(/=']') (filter(/='\'') (filter(/=',') 
-               (show (zip (map length (group str)) (map head (group str)))))))))               
+myFilter = filter (`notElem` ['[',']','(',')',',','\'','\"'])
+encode str = myFilter $ show $ zip (map length (group str)) (map head (group str))
 {-
 Составные части для колбасы.
 en str = map length (group str)
-
 en1 str = map head (group str)
-
 eenn str = filter(/=')') (filter(/='(') (filter(/='[') (filter(/=']') (filter(/='\'') (filter(/=',') (show (zip (en str) (en1 str))))))))
 -}
-decode :: String -> String
-decode str = filter(/='[') (filter(/=']') (filter(/='\"') (filter(/=',') (show (dec str))))) where
+decode :: String -> String          
+decode str = myFilter $ show $ dec str where
         dec [] = []
-        dec str = (replicate ( read readNumber::Int ) (str !! (lenNum) )) :(dec (drop (lenNum+1) str)) where
-            lenNum = length readNumber
-            readNumber = (takeWhile (isDigit) str)        
+        dec str = (replicate ( read rn::Int ) (str !! lenNum )):(dec (drop (lenNum+1) str)) where
+                lenNum = length rn
+                rn@readNumber = takeWhile isDigit str          
 
 
--- codewars            
+
+
+{-
+            -- codewars            
 import Data.List (group,groupBy)
 import Data.Function (on)
 import Data.Char (isDigit)
@@ -55,3 +56,4 @@ decode :: String -> String
 decode = run . groupBy ((&&) `on` isDigit) where
     run [] = []
     run (len:[char]:xs) = replicate (read len) char ++ run xs
+-}    

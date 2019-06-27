@@ -28,8 +28,9 @@ Please ask before translating: some translations are already written and publish
 
 -}
 module Solution where
-  
+import Data.List  
 
+-- мои не прошло по скорости
 partsSum :: [Integer] -> [Integer]
 partsSum  =  map  sum . tls where 
     tls :: [a] -> [[a]]
@@ -43,3 +44,60 @@ tails' y@(x:xs) = y:(tails' xs)
 tails'' :: [a] -> [[a]]
 tails'' [] = [[]]
 tails'' xs = xs : (tails'' $ tail xs)
+
+partsSum' :: [Integer] -> [Integer]
+partsSum' s =  map  sum $ tails'' s where 
+    tails'' :: [a] -> [[a]]
+    tails'' [] = [[]]
+    tails'' xs = xs : (tails'' $ tail xs)
+
+
+partsSum'' s  = [sum x | x <- (tails s)]
+
+
+partsSum1 s = ps (tails s) where
+    ps [] = []
+    ps (x:xs) = sum(x):(ps xs)
+
+partsSum2 s = ps (tails s) 0 where
+    ps [] _ = []
+    ps s n = (sum (head s)):( ps (drop (n+1) s) n )
+
+partsSum3 s = ps s 0 where
+    ps [] _ = [0]
+    ps s n = (sum s):( ps (drop (n+1) s) n )    
+
+partsSum4 s = ps s where
+    ps [] = [0]
+    ps (x:xs) = (sum (x:xs)):( ps xs )        
+
+partsSum5 [] = [0]
+partsSum5 (x:xs) = (sum (x:xs)):( partsSum5 xs )
+
+partsSum6  = map (foldl (\acc x -> acc + x) 0 ) . tails
+
+partsSum6'  = map (foldr (\x acc -> acc + x) 0 ) . tails
+
+partsSum7  = map sum' . tails where
+    sum' = foldl (\acc x -> acc + x) 0
+
+
+-- моё прошло по скорости
+partsSum = head . map (scanr (+) 0) . tails
+
+partsSum9 = scanr (+) 0
+
+-- codewars
+partsSum :: [Integer] -> [Integer]
+partsSum [] = [0]
+partsSum (x : xs) = x + head t : t
+  where t = partsSum xs
+  
+partsSum :: [Integer] -> [Integer]
+partsSum = foldl (\acc n -> (head acc + n):acc) [0] . reverse
+
+import Data.List (mapAccumR)
+
+partsSum :: [Integer] -> [Integer]
+partsSum = (\ a -> fst a : snd a ) . mapAccumR (\x y -> (x+y, x)) 0
+
