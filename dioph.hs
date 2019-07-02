@@ -29,5 +29,15 @@ sol1 n  = tail $ nub  [if (x - 2*y) * (x + 2*y) == n then (x,y) else (0,0)  | x 
 
 sol2 n  = tail $ nub  [if (x - 2*y) * (x + 2*y) == n then (x,y) else (0,0)  | x <- [0,1,5], y <- [0,1,5] ]
 
-deli n = sort $ nub [if snd (n `divMod` x) == 0 then fst (n `divMod` x) else 0 | x <- [1..n]]
+sol3 n  =  [if ((x k1 k2) - 2*(y k1 k2)) * ((x k1 k2) + 2*(y k1 k2)) == n then ((x k1 k2),(y k1 k2)) else (0,0) | k1 <- (deli n), k2 <- (deli n)] 
+                      where
+                           x k1 k2 = (k2+k1)/2
+                           y k1 k2 = (k2-k1)/4
+
+sol4 n  =  [if (((k2+k1)/2) - 2*((k2-k1)/4)) * (((k2+k1)/2) + 2*((k2-k1)/4)) == n then (((k2+k1)/2),((k2-k1)/4)) else (0,0) | k1 <- (deli n), k2 <- (deli n)] 
+
+deli n = nub [if snd (n `divMod` x) == 0 then fst (n `divMod` x) else 0 | x <- [1..n]]
+
+
+
 
