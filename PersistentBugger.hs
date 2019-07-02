@@ -16,22 +16,39 @@ For example:
 
 module Codewars.G.Persistence where
 
+-- aka    
 persistence :: Int -> Int
-persistence n = multiply n 1 where
+persistence n = multiply n 0 where
     multiply n k =  if  mul > 0 then multiply mul (k+1) else k where
         mul = (mul' $ show n) where
             mul' str  | length str == 1 = 0
-                      | otherwise = product (map read ([[x] | x <- str]) :: [Int])
+                      | length str > 1 && '0' `elem` str = 1
+                      | otherwise = product (map read ([ [x] | x <- str]) :: [Int])
                   
 
-multiply n k =  if  mul > 0 then multiply mul (k+1) else k where
-    mul = (n `div` 10) * (n `mod` 10)
+-- codewars
+import Data.Char (digitToInt)
 
---strToArr (s:sx) =  (map read ([[x] | x <- s:sx]) :: [Int])
+persistence :: Int -> Int
+persistence n = if n < 10 then 0 else 1 + persistence (product $ map digitToInt $ show n)
 
-strToArr (s:sx) =  ([if [x] == "0" then "10" else [x] | x <- s:sx])
+---
+persistence :: Int -> Int
+persistence n = 
+  let digits = map (\x -> read $ [x]) $ show n in
+      if length digits == 1
+         then 0
+         else 1 + persistence (product digits)
 
-
-mul str  | length str == 1 = 0 
-         | otherwise = product (map read ([ [x] | x <- str]) :: [Int])
-
+--- хорошое решение без конвертации числа в строку и обратно
+persistence :: Int -> Int
+persistence n
+       | n < 10    = 0
+       | otherwise = 1 + persistence (digitProduct n)
+         
+digitProduct :: Int -> Int
+digitProduct n
+    | n < 10    = n
+    | otherwise = r * digitProduct q
+    where
+        (q, r) = n `divMod` 10         
