@@ -29,5 +29,8 @@ sol1 n  = tail $ nub  [if (x - 2*y) * (x + 2*y) == n then (x,y) else (0,0)  | x 
 
 sol2 n  = tail $ nub  [if (x - 2*y) * (x + 2*y) == n then (x,y) else (0,0)  | x <- [0,1,5], y <- [0,1,5] ]
 
+
+sol3 n = tail $ nub  [if x*y == n then (x,y) else (0,0)  | x <- (deli n), y <- (deli n) ]
+
 deli n = sort $ nub [if snd (n `divMod` x) == 0 then fst (n `divMod` x) else 0 | x <- [1..n]]
 
