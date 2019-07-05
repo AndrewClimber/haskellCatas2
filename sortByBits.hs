@@ -22,11 +22,8 @@ module SortingByBits (sortByBit) where
 import Data.Word (Word32)
 import Data.Bits.Bitwise (toListLE,fromListLE)
 import Data.List
+sortByBit :: [Word32] -> [Word32]
+sortByBit w = map snd (sort $ zip (map sum [(map fromEnum x) | x <- (map toListLE w)]) w)
 
---sortByBit :: [Word32] -> [Word32]
---sortByBit w =  map fromListLE $ sort $ map toListLE w
---sortByBit w = map sum [(map fromEnum x) | x <- (map toListLE w)]
-sortByBit w = sort $ map sumBitOn w
-sumBitOn n = sum $ map fromEnum $ toListLE n
 
 
