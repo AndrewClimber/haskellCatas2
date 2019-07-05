@@ -20,13 +20,15 @@ sortByBit [3, 8, 3, 6, 5, 7, 9, 1]  -- -> [1, 8, 3, 3, 5, 6, 9, 7]
 module SortingByBits (sortByBit) where
 
 import Data.Word (Word32)
-import Data.Bits.Bitwise (toListLE,fromListLE)
+--import Data.Bits.Bitwise (toListLE,fromListLE)
 import Data.Bits
 import Data.List
 sortByBit :: [Word32] -> [Word32]
-sortByBit w = map snd (sort $ zip (map sum [(map fromEnum x) | x <- (map toListLE w)]) w)
-bitCount c 0 = c
-bitCount c n = bitCount (c+1) ((.&.) n (n-1) )
+--sortByBit w = map snd (sort $ zip (map sum [(map fromEnum x) | x <- (map toListLE w)]) w)
+sortByBit w = map snd (sort $ zip (map bCnt w) w) where
+    bCnt c = bitCount 0 c
+    bitCount c 0 = c
+    bitCount c n = bitCount (c+1) ((.&.) n (n-1) )
 
 
 
