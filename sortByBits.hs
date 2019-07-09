@@ -30,6 +30,8 @@ sortByBit w = map snd (sort $ zip (map bCnt w) w) where
     bitCount c 0 = c
     bitCount c n = bitCount (c+1) ((.&.) n (n-1) )
 
+bitCount c 0 = c
+bitCount c n = bitCount (c+1) ((.&.) n (n-1) )    
 
 
 
