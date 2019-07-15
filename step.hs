@@ -1,5 +1,6 @@
 {-
-
+6 kyu Shortest steps to a number
+https://www.codewars.com/kata/shortest-steps-to-a-number/train/haskell
 Summary:
 Given a number, num, return the shortest amount of steps it would take from 1, to land exactly on that number.
 
