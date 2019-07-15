@@ -2,6 +2,9 @@
 	"folders": [
 		{
 			"path": "."
+		},
+		{
+			"path": "C:\\Python.prj\\Haskel\\Haskel.Stepic.P1"
 		}
 	]
 }
