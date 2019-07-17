@@ -39,8 +39,27 @@ num == 16 would return 4 steps:
 
 4 steps
 
+723 - 14 steps
+2843 - 17 steps
 -}
 module ShortestSteps (steps) where
 
+-- aka 
 steps :: Int -> Int
-steps = undefined
+steps n = nl n 0 where
+    nl 1 c = c
+    nl n c | even n    = nl (n `div` 2) (c+1)
+           | otherwise = nl (n-1) (c+1)
+
+steps' :: Int -> Int
+steps' 1 = 0
+steps' n  | even n = 1 + steps' (n `div` 2) | otherwise = 1 + steps' (n - 1)
+   
+
+-- codewars
+steps1 :: Int -> Int
+steps1 1 = 0
+steps1 n
+  | n `mod` 2 == 0 = 1 + steps1 (n `div` 2)
+  | otherwise      = 1 + steps1 (n - 1)
+
