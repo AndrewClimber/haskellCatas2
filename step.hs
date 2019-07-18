@@ -57,9 +57,6 @@ steps' n  | even n = 1 + steps' (n `div` 2) | otherwise = 1 + steps' (n - 1)
    
 
 -- codewars
-steps1 :: Int -> Int
-steps1 1 = 0
-steps1 n
-  | n `mod` 2 == 0 = 1 + steps1 (n `div` 2)
-  | otherwise      = 1 + steps1 (n - 1)
-
+steps :: Int -> Int
+steps 1 = 0
+steps n = steps q + r + 1 where (q,r) = n `divMod` 2
