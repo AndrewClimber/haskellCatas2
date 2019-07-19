@@ -19,17 +19,18 @@ int getScore(5) = return 750;
 -}
 
 module Codewars.Kata.Sequences where
+--import Data.Char(digitToInt)
 
-
-getScore :: Integer -> Integer
+--getScore :: Integer -> Integer
 --getScore n | n > 0 = 50*n + getScore(n-1) | otherwise = n
 --getScore n = foldl (\acc x -> acc + 50*x) 0 (tak n)
-getScore n = (foldl (\acc x -> acc + 50*x) 0 [n])
-gs n = foldl (\acc x -> acc + 50*x) 50 [n]
 --tak n = take n $ iterate (+1) 1
-tak n = take n $ iterate (+1) 1
+--gs 0 = [0]
+--gs n  = (50*n):(gs (n-1))
 
---getS n =  foldl (\x y-> 50*x + getS (y-1)) 1 (ta n)
 
-getS n =  foldl (\acc x -> acc + 50*x) 0 (ta n)
-ta n = take n $ iterate (+1) 1
+bu :: Integer -> Integer
+bu n = truncate $  (50+50*n)*(n/2)
+
+
+
