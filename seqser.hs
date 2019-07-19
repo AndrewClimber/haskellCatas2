@@ -30,7 +30,8 @@ module Codewars.Kata.Sequences where
 
 
 bu :: Integer -> Integer
-bu n = truncate $  (50+50*n)*(n/2)
+bu n =  truncate $ (fromIntegral (50+50*n)*(fromIntegral n/2))
+
 
 
 
