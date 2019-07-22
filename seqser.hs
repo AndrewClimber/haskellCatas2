@@ -29,9 +29,27 @@ module Codewars.Kata.Sequences where
 --gs n  = (50*n):(gs (n-1))
 
 
-bu :: Integer -> Integer
-bu n =  truncate $ (fromIntegral (50+50*n)*(fromIntegral n/2))
+--bu :: Integer -> Integer
+--bu n =  truncate $ (fromIntegral (50+50*n)*(fromIntegral n/2))
+
+-- aka
+getScore n = (25 + 25 * n) * n
+
+-- codewars
+getScore :: Integer -> Integer
+getScore = (* 25) . (`div` 4) . (+ (-1)) . (^ 2) . (+ 1) . (* 2)
+
+getScore :: Integer -> Integer
+getScore n = 25 * (n * n + n)
+
+import Control.Applicative
+
+getScore :: Integer -> Integer
+getScore = (*) <$> (*25) <*> (+1)
 
 
+getScore :: Integer -> Integer
+getScore n = (n * (n + 1) `div` 2) * 50
 
-
+getScore :: Integer -> Integer
+getScore n = n*(50+50*n) `div` 2
