@@ -10,32 +10,77 @@ containing the english alphabet letters.
 
 Example:
 
-alphabetized "The Holy Bible" -- "BbeehHilloTy"
+alphabetized "The Holy Bible" -- 
+"BbeehHilloTy"
+"BbeeHhilloTy"
 -}
 module Alphabetized.Kata (alphabetized) where
+
 import Data.List
+import Data.Maybe
 import Data.Char
 
-myMax :: Ord a => a -> a -> a
-myMax x y | x > y     = x
-          | otherwise = y
+
+-- aka
+sortGT (a1, b1) (a2, b2)
+  | a1 < a2 = LT
+  | a1 > a2 = GT
+  | a1 == a2 = compare (toUpper b1) (toUpper b2)
 
 alphabetized :: String -> String
-alphabetized [] = []
-alphabetized (x:xs) = (toUpper x):alphabetized xs
---alphabetized s = take length(s) 
+alphabetized s =  snd $ unzip $ sortBy sortGT $ zip (map myOrd (f s)) (f s)   where
+    f = filter (`elem` ['A'..'Z']++['a'..'z'])
+    myOrd c =  fromJust $ elemIndex (toUpper c) ['A'..'Z']
 
-qsort [] = []
-qsort (x:xs) = (qsort [y | y <- xs, y<=x]) ++ [x] ++ (qsort [y | y <- xs, y>x])
+    
 
-d = [(1,'A'),(2,'a'),(3,'B'),(4,'b'),(5,'C'),(6,'c')]
-x = [(3,'B'),(5,'C'),(4,'b')]
+---- codewars
+import Data.Char (isAlpha, toLower)
+import Data.List (sortOn)
 
+alphabetized' :: String -> String
+alphabetized' = sortOn toLower . filter isAlpha    
 
---s = zip [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52] "AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz" 
---s = zip [1..52] "AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz" 
-bigLetter = zip [1,3..52] ['A'..'Z']
-smallLetter = zip [2,4..52] ['a'..'z']
+----------------------------------------------
+import Data.Char (isLetter, toLower)
+import Data.Function (on)
+import Data.List (sortBy)
 
+alphabetized :: String -> String
+alphabetized = sortBy (compare `on` toLower) . filter isLetter
 
+-----------------------------------------
+import Data.List (sortBy)
+import Data.Char (isAlpha, toLower)
 
+alphabetized :: String -> String
+alphabetized = dropWhile (not . isAlpha) . sortBy (\x y -> toLower x `compare` toLower y)
+
+-----------------------------------------
+import Data.List (sortBy)
+import Data.Ord (comparing)
+import Data.Char (toLower, isLetter)
+
+alphabetized :: String -> String
+alphabetized = sortBy (comparing toLower) . filter isLetter
+
+---------------------------
+import Data.Char
+import Data.List
+
+alphabetized :: String -> String
+alphabetized = sortOn order . filter isAlpha
+
+order::Char->Int
+order c
+  | ord c >= 97 = ord c - 97
+  | otherwise = ord c - 65
+--------------------------------------
+import Data.Char
+import Data.List
+alphabetized :: String -> String
+alphabetized = sortBy go . filter isLetter
+  where
+    go a b = compare (toLower a) (toLower b)
+---------------------------------------
+    
