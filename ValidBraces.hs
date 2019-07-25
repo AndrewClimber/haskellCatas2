@@ -25,9 +25,14 @@ module Codewars.Kata.Braces where
 --validBraces :: String -> Bool
 leftBraces = ['(','[','{']
 rightBraces = [')',']','}']
-validBraces [] = []
-validBraces (x:xs) |  x `elem` leftBraces = x:validBraces xs
-                   |  x `elem` rightBraces = drop 1 (validBraces xs)
-                   |  otherwise = validBraces xs
+pairsBraces = ["()","[]","{}"]
+validBraces s = valid s where 
+    valid [] = []
+    valid (x1:x2:xs) | (x1 `elem` leftBraces) && (x2 `elem` leftBraces) = x1:x2:valid xs
+                     | x1 `notElem` leftBraces = error "Wrong braces"
+                     | x2 `notElem` leftBraces = if any (==x1:[x2]) pairsBraces then 
+
 
 leftBC s = [x | x <- s, x `elem` leftBraces]
+
+dropBC s = [x | x <- s, x `elem` pairsBraces]
