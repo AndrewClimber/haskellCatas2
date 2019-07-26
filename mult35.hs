@@ -8,5 +8,10 @@ Note: If the number is a multiple of both 3 and 5, only count it once.
 module MultiplesOf3And5 where
 import Data.List
 
+-- aka
 solution :: Integer -> Integer
 solution n = sum $ nub ([0,3..n-1] ++ [0,5..n-1])
+
+--- codewars
+solution :: Integer -> Integer
+solution number = sum [n | n <- [1..number - 1], n `mod` 3 == 0 || n `mod` 5 == 0]
