@@ -13,5 +13,11 @@ uniqueInOrder [1,2,2,3,3]       == [1,2,3]
 module UniqueInOrder (uniqueInOrder) where
 import Data.List
 
+-- aka
 uniqueInOrder :: Eq a => [a] -> [a]
 uniqueInOrder s = concat $ map nub (group s)
+
+-- codewars
+uniqueInOrder :: Eq a => [a] -> [a]
+uniqueInOrder = map head . group
+
